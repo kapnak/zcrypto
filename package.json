@@ -1,0 +1,14 @@
+{
+  "name": "zcrypto",
+  "version": "0.0.1",
+  "description": "Crypto module using libsodium for Z.",
+  "main": "src/zcrypto.js",
+  "scripts": {
+    "build": "./build.sh"
+  },
+  "author": "kapnak <kapnak.mail@gmail.com>",
+  "dependencies": {
+    "bs58": "^5.0.0",
+    "libsodium-wrappers-sumo": "^0.7.10"
+  }
+}
