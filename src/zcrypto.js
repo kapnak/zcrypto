@@ -1,5 +1,5 @@
 const sodium = require('libsodium-wrappers-sumo');
-const crypto = require('crypto');
+const crypto = require('crypto').webcrypto;
 const bs58 = require('bs58');
 const fs = require('fs');
 
@@ -303,10 +303,18 @@ function verify(signature, message, publicKey) {
 
 /**
  * Generate a unique random nonce timestamp based.
- * @returns {string}
+ * The nonce length is defined in `module.exports.nonceLength`.
+ * @returns {Uint8Array}
  */
 function generateNonce() {
-    return Date.now() + '' + crypto.randomInt(1000, 9999);
+    let intToUInt8Array = (n) => n >= 0x80
+        ? Uint8Array.from([(n & 0x7f) | 0x80, ...intToUInt8Array(n >> 7)])
+        : Uint8Array.from([n & 0xff]);
+
+    let nonce = new Uint8Array(module.exports.nonceLength);
+    crypto.getRandomValues(nonce);
+    nonce.set(intToUInt8Array(Date.now()));
+    return nonce;
 }
 
 
