@@ -203,7 +203,7 @@ function computeSharedKey(publicKey, privateKey) {
  *
  * @param {Uint8Array|Buffer} publicKey - The remote public key.
  * @param {Uint8Array|Buffer} privateKey - The local private key.
- * @returns {state: number, header: Uint8Array} - The state to cipher message and the header to decipher.
+ * @returns {{state: number, header: Uint8Array}} - The state to cipher message and the 24 bytes header to decipher.
  */
 function createStreamCipherFromAsymmetricKeys(publicKey, privateKey) {
     return createStreamCipher(
@@ -216,7 +216,7 @@ function createStreamCipherFromAsymmetricKeys(publicKey, privateKey) {
  * Create XChaCha20 stream cipher.
  *
  * @param {Uint8Array|Buffer} key - The key used to cipher.
- * @returns {state: number, header: Uint8Array} - The state to cipher message and the 24 bytes header to decipher.
+ * @returns {{state: number, header: Uint8Array}} - The state to cipher message and the 24 bytes header to decipher.
  */
 function createStreamCipher(key) {
     return sodium.crypto_secretstream_xchacha20poly1305_init_push(key);
